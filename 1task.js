@@ -1,4 +1,7 @@
 function customFilterUnique(array, callback) {
+    if (!Array.isArray(array) || typeof callback !== 'function') {
+        throw new Error('arguments should be array and filter function')
+    }
   const uniqueArr = [];
   const uniqueSet = new Set();
   for (const i of array) {
