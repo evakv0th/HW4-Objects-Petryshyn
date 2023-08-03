@@ -1,3 +1,5 @@
+const { person } = require("./task1");
+
 function createImmutableObject(obj) {
   for (const property in obj) {
     if (typeof obj[property] === 'object' && obj[property] !== null) {
@@ -30,3 +32,9 @@ console.log(object.g);
 console.log(object.d);
 immutableObj.d.f = 1;
 console.log(object.d);
+
+const immutablePerson = createImmutableObject(person);
+
+console.log(immutablePerson.firstName)
+immutablePerson.firstName = 'f'
+console.log(immutablePerson.firstName)

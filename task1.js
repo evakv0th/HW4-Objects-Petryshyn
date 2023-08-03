@@ -15,6 +15,7 @@ const person = {
   },
 };
 
+
 for (const property in person) {
   if (person.hasOwnProperty(property)) {
     Object.defineProperty(person, property, {
@@ -40,3 +41,5 @@ person.address = "123";
 
 console.log(Object.keys(person));
 console.log(Object.getOwnPropertyNames(person));
+
+module.exports = {person};
