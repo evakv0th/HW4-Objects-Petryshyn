@@ -1,12 +1,12 @@
 // 5.1
 function measureArrayPerformance(callback, array) {
-  const start = Date.now();
+  const start = performance.now();
   if (typeof callback !== "function" || !Array.isArray(array)) {
     throw new Error("arguments should be callback and array");
   }
 
   callback(array);
-  const end = Date.now();
+  const end = performance.now();
   console.log(`Execution time: ${end - start} ms`);
 }
 
@@ -32,7 +32,7 @@ measureArrayPerformance(testArr, a);
 
 // 5.2
 // measuring for...of+push and map
-const start = Date.now();
+const start = performance.now();
 const res = b.map((item) => item+='test')
-const end = Date.now();
+const end = performance.now();
 console.log(`Execution time: ${end - start} ms`);
