@@ -1,12 +1,35 @@
 const { person } = require("./task1");
 
 function createImmutableObject(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    throw new Error("argument should be object");
+  }
   for (const property in obj) {
-    if (typeof obj[property] === 'object' && obj[property] !== null) {
-        console.log('OBJECT DETECTED')
-        createImmutableObject(obj[property])
+    if (
+      typeof obj[property] === "object" &&
+      obj[property] !== null &&
+      !Array.isArray(obj[property])
+    ) {
+      console.log("OBJECT DETECTED");
+      createImmutableObject(obj[property]);
+    } else if (Array.isArray(obj[property])) {
+      console.log("ARRAY DETECTED");
+      obj[property].forEach((value, index) => {
+        Object.defineProperty(obj[property], index, {
+          value,
+          writable: false,
+          configurable: false,
+        });
+      });
+      Object.defineProperty(obj[property], "length", {
+        writable: false,
+        configurable: false,
+      });
     }
-    Object.freeze(obj);
+    Object.defineProperty(obj, property, {
+      writable: false,
+      configurable: false,
+    });
   }
 
   return obj;
@@ -26,7 +49,9 @@ const object = {
 const immutableObj = createImmutableObject(object);
 
 console.log(object.g);
-immutableObj.g[3] = 1;
+immutableObj.g[2] = "a";
+// immutableObj.g.push('a')
+// immutableObj.g[4] = 'b';
 console.log(object.g);
 
 console.log(object.d);
@@ -35,6 +60,6 @@ console.log(object.d);
 
 const immutablePerson = createImmutableObject(person);
 
-console.log(immutablePerson.firstName)
-immutablePerson.firstName = 'f'
-console.log(immutablePerson.firstName)
+console.log(immutablePerson.firstName);
+immutablePerson.firstName = "f";
+console.log(immutablePerson.firstName);
